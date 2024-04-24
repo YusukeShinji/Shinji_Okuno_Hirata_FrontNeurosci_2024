@@ -1,0 +1,318 @@
+##########################################################
+#  XCM-018-LX100 for Multi-Cam I/F 1.1
+#
+# BSD 3-Clause License
+# Copyright (c) 2024, Hirotsugu Okuno
+# Copyright (c) 2024, Yusuke Shinji
+##########################################################
+
+##########################################################
+# Clock sources on XCM-018
+##########################################################
+NET CLK50M_A LOC=K20 | TNM_NET = CLK50M;
+#NET CLK50M_B LOC=AB13 | TNM_NET = CLK50M;
+TIMESPEC TS_CLK50M = PERIOD CLK50M 20 ns HIGH 50 %;
+
+#NET CLK30M_A LOC=H22 | TNM_NET = CLK30M;
+#NET CLK30M_B LOC=W12 | TNM_NET = CLK30M;
+#TIMESPEC TS_CLK30M = PERIOD CLK30M 33.3 ns HIGH 50 %;
+
+##########################################################
+# LEDs on XCM-018
+##########################################################
+NET LED_H<7> LOC=H18;
+NET LED_H<6> LOC=H19;
+NET LED_H<5> LOC=G19;
+NET LED_H<4> LOC=F18;
+NET LED_H<3> LOC=F20;
+NET LED_H<2> LOC=E20;
+NET LED_H<1> LOC=D19;
+NET LED_H<0> LOC=D20;
+
+##########################################################
+# LEDs on Multi-Cam I/F
+##########################################################
+NET LED_E<3> LOC=AB3;	#IOA3 - L4
+NET LED_E<2> LOC=Y3;  	#IOA2 - L3
+NET LED_E<1> LOC=AB2; 	#IOA1 - L2
+NET LED_E<0> LOC=AA2; 	#IOA0 - L1
+
+##########################################################
+# Switches on XCM-018
+##########################################################
+NET PUSH_SW1 LOC=C20 | CLOCK_DEDICATED_ROUTE = FALSE; #(RESET)
+NET PUSH_SW2 LOC=N19;
+NET DIP_H_4 LOC=F19; 	#SW4(DIP)-4
+
+##########################################################
+# DIPSW on Multi-Cam I/F
+##########################################################
+NET DIP_E<7> LOC=AB7; 	#IOA11
+NET DIP_E<6> LOC=AA8; 	#IOA12
+NET DIP_E<5> LOC=AB8; 	#IOA13
+NET DIP_E<4> LOC=AB9; 	#IOA14
+NET DIP_E<3> LOC=Y9  ; #IOA15
+NET DIP_E<2> LOC=AA10; #IOA16
+NET DIP_E<1> LOC=AB10; #IOA17
+NET DIP_E<0> LOC=V11 ; #IOA18
+
+##########################################################
+# EXT CN2 on XCM-018
+##########################################################
+#NET CN2_1 LOC=M20;
+#NET CN2_3 LOC=L19;
+
+##########################################################
+# GPIO on Multi-Cam I/F
+##########################################################
+NET GPIO4 LOC=AB4; #IOA5 - GPIO4
+NET GPIO3 LOC=AA4; #IOA4 - GPIO3
+NET GPIO2 LOC=W4;  #IOA7 - GPIO2
+NET GPIO1 LOC=Y4;  #IOA6 - GPIO1
+
+##########################################################
+# LVDS Interfaces on Multi-Cam I/F
+# (B66)<- LVDS1 LVDS2 LVDS3 LVDS4 ->(B1)
+##########################################################
+NET MOTCON0 LOC=D8; # PWM wave -----------------------------------------------------------
+NET MOTCON1 LOC=D7; # PWM wave -----------------------------------------------------------
+NET HALL0 LOC=C8; # Hall effect sensor 0 -----------------------------------------------
+NET HALL1 LOC=D9; # Hall effect sensor 1 -----------------------------------------------
+#NET HALL2 LOC=A8; # Hall effect sensor 2 -----------------------------------------------
+
+NET LOAD LOC=D10; # Load On/Off ----------------------------------------------------------
+
+#NET MOTCON0 LOC=C15; # PWM wave -----------------------------------------------------------
+#NET MOTCON1 LOC=A15; # PWM wave -----------------------------------------------------------
+#NET HALL0 LOC=B16; # Hall effect sensor 0 -----------------------------------------------
+#NET HALL1 LOC=A16; # Hall effect sensor 1 -----------------------------------------------
+##NET HALL2 LOC=C17; # Hall effect sensor 2 -----------------------------------------------
+
+#NET LOAD LOC=E16; # Load On/Off ----------------------------------------------------------
+
+
+#NET LVDS1_P1 LOC=C15 | IOSTANDARD="LVDS_25"; #IOB24
+#NET LVDS1_N1 LOC=A15 | IOSTANDARD="LVDS_25"; #IOB25
+#NET LVDS1_P2 LOC=B16 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS1_RXCLK"; #IOB26
+#NET LVDS1_N2 LOC=A16 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS1_RXCLK"; #IOB27
+#NET LVDS1_P3 LOC=C17 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS1_RX"; #IOB28
+#NET LVDS1_N3 LOC=A17 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS1_RX"; #IOB29
+#NET LVDS1_P4 LOC=E16 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS1_RX"; #IOB30
+#NET LVDS1_N4 LOC=D17 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS1_RX"; #IOB31
+
+#NET "LVDS1_P2"	  CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "LVDS1_N2"	  CLOCK_DEDICATED_ROUTE = FALSE;
+#TIMESPEC "TS_LVDS1_RXCLK" = PERIOD "LVDS1_RXCLK" 12.5 ns HIGH 50%;
+#OFFSET = IN 6.25ns VALID 12.5ns BEFORE "LVDS1_P2" RISING;
+
+#NET LVDS2_P1 LOC=B10 | IOSTANDARD="LVDS_25"; #IOB16
+#NET LVDS2_N1 LOC=A10 | IOSTANDARD="LVDS_25"; #IOB17
+#NET LVDS2_P2 LOC=C11 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS2_RXCLK"; #IOB18
+#NET LVDS2_N2 LOC=A11 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS2_RXCLK"; #IOB19
+#NET LVDS2_P3 LOC=D14 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS2_RX"; #IOB20
+#NET LVDS2_N3 LOC=C14 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS2_RX"; #IOB21
+#NET LVDS2_P4 LOC=B14 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS2_RX"; #IOB22
+#NET LVDS2_N4 LOC=A14 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS2_RX"; #IOB23
+
+#NET "LVDS2_P2"	  CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "LVDS2_N2"	  CLOCK_DEDICATED_ROUTE = FALSE;
+#TIMESPEC "TS_LVDS2_RXCLK" = PERIOD "LVDS2_RXCLK" 12.5 ns HIGH 50%;
+#OFFSET = IN 6.25ns VALID 12.5ns BEFORE "LVDS2_P2" RISING;
+
+#NET LVDS3_P1 LOC=D7  | IOSTANDARD="LVDS_25"; #IOB9
+#NET LVDS3_N1 LOC=D8  | IOSTANDARD="LVDS_25"; #IOB8
+#NET LVDS3_P2 LOC=D9  | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS3_RXCLK"; #IOB11
+#NET LVDS3_N2 LOC=C8  | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS3_RXCLK"; #IOB10
+#NET LVDS3_P3 LOC=B8  | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS3_RX"; #IOB13
+#NET LVDS3_N3 LOC=A8  | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS3_RX"; #IOB12
+#NET LVDS3_P4 LOC=D10 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS3_RX"; #IOB14
+#NET LVDS3_N4 LOC=C10 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS3_RX"; #IOB15
+
+#NET "LVDS3_P2"	  CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "LVDS3_N2"	  CLOCK_DEDICATED_ROUTE = FALSE;
+#TIMESPEC "TS_LVDS3_RXCLK" = PERIOD "LVDS3_RXCLK" 12.5 ns HIGH 50%;
+#OFFSET = IN 6.25ns VALID 12.5ns BEFORE "LVDS3_P2" RISING;
+
+#NET LVDS4_P1 LOC=C5 | IOSTANDARD="LVDS_25"; #IOB0
+#NET LVDS4_N1 LOC=A5 | IOSTANDARD="LVDS_25"; #IOB1
+#NET LVDS4_P2 LOC=D6 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS4_RXCLK"; #IOB2
+#NET LVDS4_N2 LOC=C6 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS4_RXCLK"; #IOB3
+#NET LVDS4_P3 LOC=B6 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS4_RX"; #IOB4
+#NET LVDS4_N3 LOC=A6 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS4_RX"; #IOB5
+#NET LVDS4_P4 LOC=C7 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS4_RX"; #IOB6
+#NET LVDS4_N4 LOC=A7 | IOSTANDARD="LVDS_25" | TNM_NET = "LVDS4_RX"; #IOB7
+
+#NET "LVDS4_P2"	  CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "LVDS4_N2"	  CLOCK_DEDICATED_ROUTE = FALSE;
+#TIMESPEC "TS_LVDS4_RXCLK" = PERIOD "LVDS4_RXCLK" 16.67 ns HIGH 50%;
+#OFFSET = IN 6.25ns VALID 12.5ns BEFORE "LVDS4_P2" RISING;
+
+##########################################################
+# USB-I/F on Multi-Cam I/F
+##########################################################
+NET USB_SLWR       LOC=AB16; #IOA29
+NET USB_SLRD       LOC=AA16; #IOA30
+NET USB_SLOE       LOC=V15; #IOA27
+NET USB_FIFOADR<0> LOC=AB15; #IOA26
+NET USB_FIFOADR<1> LOC=AA14; #IOA24
+NET USB_PKTEND     LOC=AB14; #IOA25
+NET USB_nRESET     LOC=AB12; #IOA23
+NET USB_IFCLK      LOC=P20; #IOA48
+NET USB_FD<0>      LOC=T22; #IOA46
+NET USB_FD<1>      LOC=P22; #IOA49
+NET USB_FD<2>      LOC=T21; #IOA44
+NET USB_FD<3>      LOC=R22; #IOA47
+NET USB_FD<4>      LOC=U22; #IOA41
+NET USB_FD<5>      LOC=V21; #IOA39
+NET USB_FD<6>      LOC=R20; #IOA43
+NET USB_FD<7>      LOC=V22; #IOA40
+NET USB_FLAGC      LOC=P19; #IOA45
+NET USB_FLAGB      LOC=U20; #IOA42
+#NET USB_CLKOUT     LOC=Y15;  #IOA28
+
+##########################################################
+# XBee I/F on Multi-Cam I/F
+##########################################################
+#NET XBEE_RESET LOC=Y7;  #IOA10
+#NET XBEE_DIN   LOC=AB6; #IOA9
+#NET XBEE_DOUT  LOC=AA6; #IOA8
+
+##########################################################
+# Motor I/F on Multi-Cam I/F
+##########################################################
+#NET MOT_W3L LOC=A18 ; #IOB32
+#NET MOT_E2L LOC=B18 ; #IOB33
+#NET MOT_W2L LOC=C9  ; #IOB34
+#NET MOT_E1L LOC=C13 ; #IOB35
+#NET MOT_W1L LOC=D15 ; #IOB36
+#NET MOT_W1H LOC=A20 ; #IOB37
+#NET MOT_E1H LOC=B20 ; #IOB38
+#NET MOT_W2H LOC=A21 ; #IOB39
+#NET MOT_E2H LOC=B21 ; #IOB40
+#NET MOT_W3H LOC=B22 ; #IOB41
+#NET MOT_E3H LOC=C22 ; #IOB42
+#NET MOT_E3L LOC=D21 ; #IOB43
+
+##########################################################
+# MPU I/F on Multi-Cam I/F
+##########################################################
+#NET MPU_SCL   LOC=W20 ; #IOA37
+#NET MPU_SDO   LOC=AB19; #IOA36
+#NET MPU_SDI   LOC=Y19 ; #IOA35
+#NET MPU_NCS   LOC=AB18; #IOA34
+
+##########################################################
+# Servo Pins on Multi-Cam I/F
+##########################################################
+#NET SV1    LOC=AA12; #IOA22
+#NET SV2    LOC=Y13 ; #IOA21
+#NET SV3    LOC=Y12 ; #IOA20
+#NET SV4    LOC=W11 ; #IOA19
+
+##########################################################
+# DDR2 SDRAM on XCM-018
+##########################################################
+#NET DDR_A<0>     LOC=H2;
+#NET DDR_A<1>     LOC=H1;
+#NET DDR_A<2>     LOC=H5;
+#NET DDR_A<3>     LOC=K6;
+#NET DDR_A<4>     LOC=F3;
+#NET DDR_A<5>     LOC=K3;
+#NET DDR_A<6>     LOC=J4;
+#NET DDR_A<7>     LOC=H6;
+#NET DDR_A<8>     LOC=E3;
+#NET DDR_A<9>     LOC=E1;
+#NET DDR_A<10>    LOC=G4;
+#NET DDR_A<11>    LOC=C1;
+#NET DDR_A<12>    LOC=D1;
+#NET DDR_A<13>    LOC=G6;
+#NET DDR_A<14>    LOC=F5;
+#NET DDR_BA<0>    LOC=G3;
+#NET DDR_BA<1>    LOC=G1;
+#NET DDR_BA<2>    LOC=F1;
+#NET DDR_D<0>     LOC=N3;
+#NET DDR_D<1>     LOC=N1;
+#NET DDR_D<2>     LOC=M2;
+#NET DDR_D<3>     LOC=M1;
+#NET DDR_D<4>     LOC=J3;
+#NET DDR_D<5>     LOC=J1;
+#NET DDR_D<6>     LOC=K2;
+#NET DDR_D<7>     LOC=K1;
+#NET DDR_D<8>     LOC=P2;
+#NET DDR_D<9>     LOC=P1;
+#NET DDR_D<10>    LOC=R3;
+#NET DDR_D<11>    LOC=R1;
+#NET DDR_D<12>    LOC=U3;
+#NET DDR_D<13>    LOC=U1;
+#NET DDR_D<14>    LOC=V2;
+#NET DDR_D<15>    LOC=V1;
+#NET DDR_DQS_P<0> LOC=L3;
+#NET DDR_DQS_N<0> LOC=L1;
+#NET DDR_DQS_P<1> LOC=T2;
+#NET DDR_DQS_N<1> LOC=T1;
+#NET DDR_DM<0>    LOC=L4;
+#NET DDR_DM<1>    LOC=M3;
+#NET DDR_RAS_N    LOC=K5;
+#NET DDR_CAS_N    LOC=K4;
+#NET DDR_WE_N     LOC=F2;
+#NET DDR_CK_P     LOC=H4;
+#NET DDR_CK_N     LOC=H3;
+#NET DDR_CKE      LOC=D2;
+#NET DDR_ODT      LOC=J6;
+
+##########################################################
+# MRAM on XCM-018
+##########################################################
+#NET MRAM_OE    LOC=M17;
+#NET MRAM_WE    LOC=H21;
+#NET MRAM_CE    LOC=J19;
+#NET MRAM_BE0   LOC=P18;
+#NET MRAM_BE1   LOC=P17;
+#NET MRAM_A<0>  LOC=J17;
+#NET MRAM_A<1>  LOC=H17;
+#NET MRAM_A<2>  LOC=K18;
+#NET MRAM_A<3>  LOC=L20;
+#NET MRAM_A<4>  LOC=K19;
+#NET MRAM_A<5>  LOC=H20;
+#NET MRAM_A<6>  LOC=G20;
+#NET MRAM_A<7>  LOC=F21;
+#NET MRAM_A<8>  LOC=G17;
+#NET MRAM_A<9>  LOC=C19;
+#NET MRAM_A<10> LOC=K16;
+#NET MRAM_A<11> LOC=J16;
+#NET MRAM_A<12> LOC=N22;
+#NET MRAM_A<13> LOC=M22;
+#NET MRAM_A<14> LOC=M21;
+#NET MRAM_A<15> LOC=N16;
+#NET MRAM_A<16> LOC=M16;
+#NET MRAM_A<17> LOC=L15;
+#NET MRAM_D<0>  LOC=L22;
+#NET MRAM_D<1>  LOC=K21;
+#NET MRAM_D<2>  LOC=K22;
+#NET MRAM_D<3>  LOC=L17;
+#NET MRAM_D<4>  LOC=K17;
+#NET MRAM_D<5>  LOC=G16;
+#NET MRAM_D<6>  LOC=H16;
+#NET MRAM_D<7>  LOC=F16;
+#NET MRAM_D<8>  LOC=P21;
+#NET MRAM_D<9>  LOC=N20;
+#NET MRAM_D<10> LOC=M19;
+#NET MRAM_D<11> LOC=R19;
+#NET MRAM_D<12> LOC=M18;
+#NET MRAM_D<13> LOC=V20;
+#NET MRAM_D<14> LOC=U19;
+#NET MRAM_D<15> LOC=T18;
+
+##########################################################
+# Spare pins
+##########################################################
+#NET IOA31 LOC=Y17 ; #IOA31
+#NET IOA32 LOC=AB17; #IOA32
+#NET IOA33 LOC=AA18; #IOA33
+#NET IOA38 LOC=W22 ; #IOA38
+#NET IOB44 LOC=D22 ; #IOB44
+#NET IOB45 LOC=E22 ; #IOB45
+#NET IOB46 LOC=F22 ; #IOB46
+#NET IOB47 LOC=G22 ; #IOB47
+#NET IOB48 LOC=J20 ; #IOB48
+#NET IOB49 LOC=J22 ; #IOB49
